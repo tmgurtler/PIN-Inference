@@ -1,35 +1,45 @@
+##
+# Tree class for the PIN inference software
+##
 from node import Node
 
 
 class Tree:
-    def __init__(self, root):
-        self.root = root
-        self.build(self.root, 1)
+    def __init__(self):
+        self.root = Node("enter", 0)
+        self.build(self.root, 0)
 
+    ##
+    # @returns the root node of this tree
+    ##
     def get_root(self):
         return self.root
 
-    # TODO check this builds correctly
+    ##
+    # This function builds a tree containing all possible 4 digit PINs
+    ##
     def build(self, parent, level):
-        count = 0
-        level += 1
-        while level < 5:
-            for x in range(0, 9):
-                count += 1
-                print(count)
+        if parent is not None and level < 4:
+            for x in range(0, 10):
                 new_child = Node(x, parent.get_digit())
                 parent.add_child(new_child)
-                self.build(new_child, level)
+                self.build(new_child, level + 1)
 
     # TODO rank all PINs in order of highest to lowest probability
     def rank(self):
         return 0
 
+    ##
+    # This function displays the contents of this tree
+    ##
     def display(self):
         self.root.display(0)
 
+    ##
+    # This function displays the total number of nodes in this tree
+    ##
     def size(self):
-        count = 1
+        count = 0
         if self.root.get_children() is not None:
             count += self.root.size()
 
