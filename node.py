@@ -6,12 +6,10 @@ from distance import Distance
 
 
 class Node:
-    def __init__(self, digit, p_digit):
-        # TODO determine distance
-        # d = Distance(p_digit, digit)
+    def __init__(self, p_digit, digit):
         self.digit = digit
-        self.probability = 0.0
-        self.distance = 0
+        self.probability = None
+        self.distance = Distance(p_digit, digit)
         self.children = []
 
     ##
@@ -30,7 +28,7 @@ class Node:
     # @returns the distance for this node
     ##
     def get_distance(self):
-        return self.distance
+        return self.distance.get_distance()
 
     ##
     # @returns the list of children for this node
@@ -53,12 +51,15 @@ class Node:
     def add_child(self, child):
         self.children.append(child)
 
-    # TODO delete or modify this function
+    ##
+    # This function displays information about this node and its children
     def display(self, level):
         if level == 0:
             print(self.digit)
         else:
-            print("\t"*level, self.digit + " dist:" + self.distance)
+            print("\t"*level, str(self.digit) + " dist: " +
+                              self.distance.get_distance() + " prob: " +
+                              str(self.probability))
 
         level += 1
         for child in self.children:
