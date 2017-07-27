@@ -6,7 +6,7 @@ from node import Node
 
 class Tree:
     def __init__(self):
-        self.root = Node("enter", 0)
+        self.root = Node("e", 0)
         self.build(self.root, 0)
 
     ##
@@ -21,11 +21,14 @@ class Tree:
     def build(self, parent, level):
         if parent is not None and level < 4:
             for x in range(0, 10):
-                new_child = Node(x, parent.get_digit())
+                new_child = Node(parent.get_digit(), x)
                 parent.add_child(new_child)
                 self.build(new_child, level + 1)
 
     # TODO rank all PINs in order of highest to lowest probability
+    # This function ranks all possible PINs in the order of highest
+    # to lowest probability
+    ##
     def rank(self):
         return 0
 
@@ -36,11 +39,12 @@ class Tree:
         self.root.display(0)
 
     ##
-    # This function displays the total number of nodes in this tree
+    # This function counts the total number of nodes in this tree
     ##
     def size(self):
         count = 0
         if self.root.get_children() is not None:
             count += self.root.size()
-
         print(count)
+
+# End of file
