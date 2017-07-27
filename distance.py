@@ -32,7 +32,6 @@ class Distance:
     ##
     def find(self, p_digit, next_digit):
         search_pair = str(next_digit) + str(p_digit)
-        print("Key pair: " + search_pair)
         set_num = 0
         found = False
         for dist_set in self.all_distance_sets:
