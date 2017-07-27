@@ -53,17 +53,5 @@ class Node:
     def add_child(self, child):
         self.children.append(child)
 
-    # TODO delete or modify this function
-    def display(self, level):
-        print(self.digit)
-        for child in self.children:
-            child.display()
-
-    # TODO delete or modify this function
-    def size(self):
-        count = 1
-        for child in self.children:
-            count += child.size()
-        return count
 
 # End of file
