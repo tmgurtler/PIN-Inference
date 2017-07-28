@@ -6,7 +6,7 @@ def infer(entries, model):
     res = []
 
     for attempt, pin in formatted_entry_list:
-        t = Tree(attempt)
+        t = Tree(attempt, model)
         ranked_choices = t.rank()
         res.append(ranked_choices.index(pin))
 
