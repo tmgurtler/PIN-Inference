@@ -8,9 +8,14 @@ from distance import Distance
 class Node:
     def __init__(self, parent, digit, model, time):
         self.digit = digit
-        self.distance = Distance(parent.get_digit(), digit)
-        self.probability = parent.get_probability()\
-                    * model.probability(self.distance.get_distance(), time)
+
+        if parent is None:
+            self.distance = None
+            self.probability = 1
+        else:
+            self.distance = Distance(parent.get_digit(), digit)
+            self.probability = parent.get_probability()\
+                        * model.probability(self.distance.get_distance(), time)
         self.children = []
 
     ##
