@@ -15,7 +15,7 @@ class Node:
         else:
             self.distance = Distance(parent.get_digit(), digit)
             self.probability = parent.get_probability()\
-                        * model.probability(self.distance.get_distance(), time)
+                * model.probability(self.distance.get_distance(), time)
         self.children = []
 
     ##
@@ -50,55 +50,26 @@ class Node:
         self.children.append(child)
 
     ##
-    # This function displays information about this node and its children
-    def display(self, level):
-        if level == 0:
-            print(self.digit)
-        else:
-            print("\t"*level, str(self.digit) + " dist: " +
-                              self.distance.get_distance() + " prob: " +
-                              str(self.probability))
-
-        level += 1
-        for child in self.children:
-            child.display(level)
-
+    # This function determines if this node is a leaf node
     ##
-    # Function that calculates the number of nodes in the tree
-    ##
-    def size(self):
-        count = 1
-        for child in self.children:
-            count += child.size()
-        return count
-
     def is_leaf(self):
         if self.children.__len__() == 0:
             return True
         return False
 
-    def num_leaves(self):
-        count = 0
-        if self.is_leaf():
-            count += 1
-
-        for child in self.children:
-            count += child.num_leaves()
-
-        return count
-
-
     ##
-    # This function extracts the individial PINs in relation to this node
+    # This function extracts the individual PINs in relation to this node
     ##
-    def extract(self, curr_str):
-        print(curr_str)
+    def extract(self, curr_str, pin_list):
         if self.get_digit() != "e":
             curr_str += str(self.get_digit())
 
-        for child in self.children:
-            curr_str += child.extract(curr_str)
-        return curr_str
+        if self.is_leaf():
+            return pin_list.append([curr_str, self.get_probability()])
+        else:
+            for child in self.children:
+                child.extract(curr_str, pin_list)
+        return pin_list
 
 
 # End of file
