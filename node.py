@@ -6,10 +6,16 @@ from distance import Distance
 
 
 class Node:
-    def __init__(self, p_digit, digit):
+    def __init__(self, parent, digit, model, time):
         self.digit = digit
-        self.probability = None
-        self.distance = Distance(p_digit, digit)
+
+        if parent is None:
+            self.distance = None
+            self.probability = 1
+        else:
+            self.distance = Distance(parent.get_digit(), digit)
+            self.probability = parent.get_probability()\
+                        * model.probability(self.distance.get_distance(), time)
         self.children = []
 
     ##
@@ -35,14 +41,6 @@ class Node:
     ##
     def get_children(self):
         return self.children
-
-    ##
-    # This function calculates the probability of this node
-    # in regards to this node's parent probability
-    ##
-    def calc_probability(self, parent, model, timing):
-        self.probability = parent.probability()\
-                           * model.probability(timing, self.distance)
 
     ##
     # This function adds the given child to the list of children
@@ -73,5 +71,34 @@ class Node:
         for child in self.children:
             count += child.size()
         return count
+
+    def is_leaf(self):
+        if self.children.__len__() == 0:
+            return True
+        return False
+
+    def num_leaves(self):
+        count = 0
+        if self.is_leaf():
+            count += 1
+
+        for child in self.children:
+            count += child.num_leaves()
+
+        return count
+
+
+    ##
+    # This function extracts the individial PINs in relation to this node
+    ##
+    def extract(self, curr_str):
+        print(curr_str)
+        if self.get_digit() != "e":
+            curr_str += str(self.get_digit())
+
+        for child in self.children:
+            curr_str += child.extract(curr_str)
+        return curr_str
+
 
 # End of file
