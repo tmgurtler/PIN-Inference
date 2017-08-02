@@ -1,4 +1,6 @@
+from contextlib import contextmanager
 from collections import defaultdict
+from dateutil import parser as prsr
 import numpy as np
 import sqlite3
 import math
@@ -201,6 +203,11 @@ list_of_lists = {
         "seven_to_enter",
         "eight_to_enter",
         "nine_to_enter"
+    ],
+
+    "display_sets": [
+        "dist_zero",
+        "dist_two"
     ]
 }
 
@@ -297,8 +304,8 @@ def clean_data(keystrokes):
                     flag_incorrect = True
                     # needs try/except because some entries are "" and int("") throws an exception
                     try:
-                        pin_entered = int("".join([x for (x,y) in attempt]))
-                        flag_incorrect = pin_entered != pin
+                        pin_entered = "".join([x for (x,y) in attempt])
+                        flag_incorrect = pin_entered != ("0000" + str(pin))[-4:]
                     except:
                         pass
 

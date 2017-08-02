@@ -15,7 +15,7 @@ class Node:
         else:
             self.distance = Distance(parent.get_digit(), digit)
             self.probability = parent.get_probability()\
-                * model.probability(self.distance.get_distance(), time)
+                + model.probability(self.distance.get_distance(), time)
         self.children = []
 
     ##

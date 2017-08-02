@@ -53,5 +53,10 @@ class Model:
     # @input timing - the timing we are testing
     #
     # @returns the logprob of this conditional event
-    def probability(trial_set, timing):
-        return log(__distributions[trial_set].pdf(timing)) + log(__set_probabilities[trial_set])
+    def probability(self, trial_set, timing):
+        res = -float('inf')
+        try:
+            res = log(self.__distributions[trial_set].pdf(timing))
+        except:
+            pass
+        return res

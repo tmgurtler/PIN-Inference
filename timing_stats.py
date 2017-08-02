@@ -3,16 +3,13 @@
 import matplotlib
 from common import *
 from matplotlib.ticker import FuncFormatter
-from contextlib import contextmanager
 from collections import defaultdict
 from scipy import stats
-from dateutil import parser as prsr
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 import numpy as np
 import itertools
 import argparse
-
 
 ##
 # This function parses keystroke data into interkey timing data while separating data by user
@@ -175,7 +172,7 @@ def hist_of_set(timings, given_set, name_of_set, show_model, show_raw):
         alpha, loc, beta = stats.gamma.fit(active_set)
         scale = beta ** (-1)
         x = np.linspace(0, 650, 1000)
-        model_name = name_of_set +"\nmodeled as Gamma dist"
+        model_name = name_of_set
 
         ##
         # this is a hack so that we can always make sure that
@@ -222,7 +219,7 @@ def hist_of_set(timings, given_set, name_of_set, show_model, show_raw):
 
         # plot the gamma distribution model of the data
         if show_model:
-            plt.plot(x,stats.gamma.pdf(x, alpha, loc=loc, scale=beta),'--', color=color[name_of_set],label=model_name)
+            plt.plot(x,stats.gamma.pdf(x, alpha, loc=loc, scale=beta),'-', color=color[name_of_set],label=model_name)
 
         # force the histogram bin edges to always fall on multiples of 25, from 50 to 625
         bin_setter = [50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625]

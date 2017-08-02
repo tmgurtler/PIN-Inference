@@ -24,7 +24,7 @@ class Tree:
     def build(self, parent, level):
         if parent is not None and level < 4:
             for x in range(0, 10):
-                new_child = Node(parent, x, self.timings[level])
+                new_child = Node(parent, x, self.model, self.timings[level])
                 parent.add_child(new_child)
                 self.build(new_child, level + 1)
 
